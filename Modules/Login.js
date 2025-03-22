@@ -10,8 +10,8 @@ class EcomerceLogin{
         this.verify = "//h3[normalize-space()='Setup PIN for your account']"
     }
     async LogIN(){
-        await this.page.locator(this.emailAdd).fill("aansagill572@gmail.com", { delay: 100 })
-        await this.page.locator(this.passwordAdd).fill("Admin1234@",  { delay: 100 } )
+        await this.page.locator(this.emailAdd).fill("aansagill572@gmail.com")
+        await this.page.locator(this.passwordAdd).fill("Admin1234@")
         await this.page.locator(this.LoginBTN).click()
         await expect(this.page.locator(this.verify)).toBeVisible()
     }
