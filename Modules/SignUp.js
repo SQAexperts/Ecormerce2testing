@@ -27,22 +27,19 @@ class EcomerceSignUp{
                 await this.page.locator(this.Click).click()
                 await this.page.pause(); // Pauses execution so you can inspect manually
 
-                await this.page.locator(this.username).fill("TestingAutomation", { delay: 100 })
-                await this.page.locator(this.firstName).fill("Abdur", { delay: 100 })
-                await this.page.locator(this.LastName).fill("Virk", { delay: 100 })
-                await this.page.locator(this.email).fill("aansagill572@gmail.com", { delay: 100 })
+                await this.page.locator(this.username).fill("TestingAutomation")
+                await this.page.locator(this.firstName).fill("Abdur")
+                await this.page.locator(this.LastName).fill("Virk")
+                await this.page.locator(this.email).fill("aansagill572@gmail.com")
                 await this.page.locator(this.Country).click()
-                await this.page.waitForTimeout(1000)
                 await this.page.locator(this.option).click()
-                await this.page.locator(this.password).fill("Admin1234@",  { delay: 100 } )
-                await this.page.waitForTimeout(1000)
+                await this.page.locator(this.password).fill("Admin1234@")
                 await this.page.locator(this.buttonRegister).click();
            }
            async Checkheading2(){
             await expect(this.page.locator(this.heading2)).toBeVisible()
             await this.page.locator(this.ContinueBTN).click();
             await expect(this.page.locator(this.VerifyHeading)).toBeVisible
-            await this.page.waitForTimeout(3000)
 
            }
     }
