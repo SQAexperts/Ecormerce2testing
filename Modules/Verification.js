@@ -7,11 +7,8 @@ class VerificationEcomerce{
         this.SubmitBTN = "//button[normalize-space()='Submit']"
  }
  async verification () {
-    await this.page.locator(this.Pin).fill("0346", { delay: 100 })
-    await this.page.waitForTimeout(1000)
-    await this.page.locator(this.SubmitBTN).click()
-    await this.page.waitForTimeout(3000)
-    
+    await this.page.locator(this.Pin).fill("0346")
+    await this.page.locator(this.SubmitBTN).click()    
  }
 }
 
