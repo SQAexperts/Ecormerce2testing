@@ -7,13 +7,15 @@ const VERIFICATION = require("../Modules/Verification");
 
 chromium.use(stealth);
 
-test("Testing Ecommerce Web App", async ({ page }) => {
+test("Ecommerce Web App - Signup, Login, and Verification", async ({ page }) => {
   const browser = await chromium.launch({ headless: false });
   const context = await browser.newContext({
     userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:119.0) Gecko/20100101 Firefox/119.0",
     viewport: { width: 1280, height: 800 },
   });
+
   const newPage = await context.newPage();
+  console.log("Opening the eCommerce demo page...");
 
   await newPage.goto("https://www.opencart.com/index.php?route=cms/demo", {
     waitUntil: "domcontentloaded",
@@ -21,24 +23,30 @@ test("Testing Ecommerce Web App", async ({ page }) => {
 
   console.log("Waiting for Cloudflare verification...");
 
-  // Handle Cloudflare verification wait
+  // Handle Cloudflare verification wait loop
   for (let i = 0; i < 20; i++) {
-    if (!(await newPage.locator("text=Verifying you are human").isVisible())) {
-      console.log("Verification passed!");
+    const isVerifying = await newPage.locator("text=Verifying you are human").isVisible();
+    if (!isVerifying) {
+      console.log("Cloudflare verification passed!");
       break;
     }
     await newPage.waitForTimeout(3000);
   }
 
-  const Signup = new SignUP(newPage);
-  const login = new LOGIN(newPage);
-  const verification = new VERIFICATION(newPage);
+  console.log("Starting the signup process...");
+  const signup = new SignUP(newPage);
+  await signup.Checkheading1();
+  await signup.SignUpprocess();
+  await signup.Checkheading2();
 
-  await Signup.Checkheading1();
-  await Signup.SignUpprocess();
-  await Signup.Checkheading2();
+  console.log("Proceeding with login...");
+  const login = new LOGIN(newPage);
   await login.LogIN();
+
+  console.log("Handling verification step...");
+  const verification = new VERIFICATION(newPage);
   await verification.verification();
 
+  console.log("Test execution completed successfully.");
   await browser.close();
 });
